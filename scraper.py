@@ -1,5 +1,6 @@
 import re
 import urllib.request
+from urllib.parse import unquote
 
 def validar_url(url):
     padrao = r"^https://pt\.wikipedia\.org/wiki/.*"
@@ -41,3 +42,28 @@ topicos = re.findall(padrao_limpo, html_conteudo, re.DOTALL)
 
 for t in topicos:
     print(f"- {t}")
+
+
+# CAPTURA DE NOMES DE IMAGENS
+
+# Padrão de captura de imagens:
+# 1. src= procura pontos no HTML onde estão os links (src = source).
+# 2. ((?:https:)? permite que o protocolo seja capturado ou não
+# 3. //upload\.wikimedia\.org/ captura apenas imagens hospedadas nos servidores Wikipedia.
+# 4. [^"]+ captura qualquer caractere até encontra aspas duplas EXCETO as próprias aspas duplas.
+# 5. \. (?:jpg|jpeg|png|gif|svg) garante que o padrão termine com uma extensão de arquivo do tipo imagem, podendo ser JPG, JPEG, PNG, GIF e SVG.
+padrao_imagens = r'src="((?:https:)?//upload\.wikimedia\.org/[^"]+\.(?:jpg|jpeg|png|gif|svg))"'
+
+links_imagens = re.findall(padrao_imagens, html_conteudo)
+
+ 
+nomes_imagens= []
+for img in links_imagens:
+    nome = img.split('/')[-1] # pega apenas a ultima parte do link
+    nome = unquote(nome) # traduz simbolos especiais de URLs para a lingua natural.
+    nome = re.sub(r'^\d+px-', '', nome) # tira (se houver) o prefixo de tamanho, comum em imagens hospedadas na Wikipédia
+    nomes_imagens.append(nome) # guarda apenas o nome da imagem na lista
+
+print("----------------- NOME DAS IMAGENS -------------------")
+for img in nomes_imagens:
+    print(f"- {img}")
