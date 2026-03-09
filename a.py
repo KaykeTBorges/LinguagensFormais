@@ -1,5 +1,16 @@
-r'class="vector-toc-text".*?>(.*?)</div>'
-1
-        1.2
-        1.3
-2
+from scraper import *
+
+while(True):
+        link = input("Digite o link do artigo do wikipedia: ")
+        if validar_url(link):
+            print("URL válido e checado!")
+            break
+        else:
+            print("URL inválida")
+
+html = requisicao(link)
+
+extrair_titulos(html)
+
+extrair_links(html)
+
