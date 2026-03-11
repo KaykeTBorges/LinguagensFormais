@@ -21,6 +21,7 @@ def requisicao(url):
             html_conteudo = resposta.read().decode('utf-8')
     return html_conteudo
     
+# Captura de TITULO
 def extrair_titulos(html):
     # Padrão para capturar os tópicos do índice da Wikipédia:
     # 1. Procura a classe 'vector-toc-text' como âncora, onde vão estar todos os títulos
@@ -37,6 +38,7 @@ def extrair_titulos(html):
     for t in titulos:
         print(f"- {t}")
 
+# Captura de LINKS
 def extrair_links(html):
     # os links se encontram em href
     # href="/wiki/[^":?#]+" -> Garante que o link é para um artigo (sem imagens ou seções)
@@ -64,3 +66,27 @@ def extrair_links(html):
     print("\nLINKS DO ARTIGO WIKI")
     for l in links_limpo:
         print(f"- {l}")
+
+# CAPTURA DE NOMES DE IMAGENS
+def extrair_imagens(html):
+    # Padrão de captura de imagens:
+    # 1. src= procura pontos no HTML onde estão os links (src = source).
+    # 2. ((?:https:)? permite que o protocolo seja capturado ou não
+    # 3. //upload\.wikimedia\.org/ captura apenas imagens hospedadas nos servidores Wikipedia.
+    # 4. [^"]+ captura qualquer caractere até encontra aspas duplas EXCETO as próprias aspas duplas.
+    # 5. \. (?:jpg|jpeg|png|gif|svg) garante que o padrão termine com uma extensão de arquivo do tipo imagem, podendo ser JPG, JPEG, PNG, GIF e SVG.
+    padrao_imagens = r'src="((?:https:)?//upload\.wikimedia\.org/[^"]+\.(?:jpg|jpeg|png|gif|svg))"'
+
+    links_imagens = re.findall(padrao_imagens, html)
+
+    
+    nomes_imagens= []
+    for img in links_imagens:
+        nome = img.split('/')[-1] # pega apenas a ultima parte do link
+        nome = unquote(nome) # traduz simbolos especiais de URLs para a lingua natural.
+        nome = re.sub(r'^\d+px-', '', nome) # tira (se houver) o prefixo de tamanho, comum em imagens hospedadas na Wikipédia
+        nomes_imagens.append(nome) # guarda apenas o nome da imagem na lista
+
+    print("IMAGENS DO ARTIGO WIKI")
+    for img in nomes_imagens:
+        print(f"- {img}")

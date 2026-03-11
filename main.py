@@ -14,3 +14,5 @@ extrair_titulos(html)
 
 extrair_links(html)
 
+extrair_imagens(html)
+
