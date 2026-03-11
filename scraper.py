@@ -1,5 +1,6 @@
 import re
 import urllib.request
+from urllib.parse import unquote
 
 def validar_url(url):
     padrao = r"^https://pt\.wikipedia\.org/wiki/.*"
