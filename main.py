@@ -10,7 +10,7 @@ while(True):
 
 html = requisicao(link)
 
-extrair_titulos(html)
+extrair_topicos(html)
 
 extrair_links(html)
 

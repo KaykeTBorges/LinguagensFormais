@@ -29,13 +29,13 @@ def extrair_topicos(html):
     # 3. \s* -> remove quebras de linha e espaços extras
     # 4. <span>(.*?)</span> -> Captura apenas o texto dentro do segundo span (o nome do tópico)
     # o que foi digitado dentro do parênteses é o que ele vai pegar e retornar como o padrão
-    padrao_titulos = r'class="vector-toc-text".*?<span.*?>.*?</span>\s*<span>(.*?)</span>'
+    padrao_topicos = r'class="vector-toc-text".*?<span.*?>.*?</span>\s*<span>(.*?)</span>'
 
     # O re.DOTALL é fundamental para ignorar as quebras de linha
-    titulos = re.findall(padrao_titulos, html, re.DOTALL)
+    topicos = re.findall(padrao_topicos, html, re.DOTALL)
 
     print("\nTITULOS DO ARTIGO WIKI")
-    for t in titulos:
+    for t in topicos:
         print(f"- {t}")
 
 # Captura de LINKS
