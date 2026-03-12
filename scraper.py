@@ -22,7 +22,7 @@ def requisicao(url):
     return html_conteudo
     
 # Captura de TITULO
-def extrair_titulos(html):
+def extrair_topicos(html):
     # Padrão para capturar os tópicos do índice da Wikipédia:
     # 1. Procura a classe 'vector-toc-text' como âncora, onde vão estar todos os títulos
     # 2. <span.*?>.*?</span> -> Localiza e ignora o primeiro span (o número da seção)
@@ -74,7 +74,8 @@ def extrair_imagens(html):
     # 2. ((?:https:)? permite que o protocolo seja capturado ou não
     # 3. //upload\.wikimedia\.org/ captura apenas imagens hospedadas nos servidores Wikipedia.
     # 4. [^"]+ captura qualquer caractere até encontra aspas duplas EXCETO as próprias aspas duplas.
-    # 5. \. (?:jpg|jpeg|png|gif|svg) garante que o padrão termine com uma extensão de arquivo do tipo imagem, podendo ser JPG, JPEG, PNG, GIF e SVG.
+    # 5. \. (?:jpg|jpeg|png|gif|svg) garante que o padrão termine com uma extensão de arquivo do tipo imagem, 
+    # podendo ser JPG, JPEG, PNG, GIF e SVG.
     padrao_imagens = r'src="((?:https:)?//upload\.wikimedia\.org/[^"]+\.(?:jpg|jpeg|png|gif|svg))"'
 
     links_imagens = re.findall(padrao_imagens, html)
