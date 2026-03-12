@@ -34,7 +34,7 @@ def extrair_topicos(html):
     # O re.DOTALL é fundamental para ignorar as quebras de linha
     topicos = re.findall(padrao_topicos, html, re.DOTALL)
 
-    print("\nTITULOS DO ARTIGO WIKI")
+    print("\nTÓPICOS DO ARTIGO WIKI")
     for t in topicos:
         print(f"- {t}")
 
