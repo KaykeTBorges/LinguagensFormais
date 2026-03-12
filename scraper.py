@@ -89,4 +89,4 @@ def extrair_imagens(html):
 
     print("IMAGENS DO ARTIGO WIKI")
     for img in nomes_imagens:
-        print(f"- {img}")
+        print(f"NOME DA IMAGEM:- {img}\nLINK: {links_imagens[nomes_imagens.index(img)]}")
