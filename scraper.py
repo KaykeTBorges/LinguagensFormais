@@ -34,7 +34,7 @@ def extrair_topicos(html):
     # O re.DOTALL é fundamental para ignorar as quebras de linha
     topicos = re.findall(padrao_topicos, html, re.DOTALL)
 
-    with open("topicos.txt", "w", encoding="utf-8") as f:
+    with open("1-topicos.txt", "w", encoding="utf-8") as f:
         f.write("TÓPICOS DO ARTIGO WIKI\n\n")
 
         for t in topicos:
@@ -71,7 +71,7 @@ def extrair_links(html):
 
     links = sorted(set(links_limpo))
 
-    with open("links.txt", "w", encoding="utf-8") as f:
+    with open("2-links.txt", "w", encoding="utf-8") as f:
         f.write("LINKS DO ARTIGO WIKI\n\n")
 
         for titulo, link in links:
@@ -99,7 +99,7 @@ def extrair_imagens(html):
         nome = re.sub(r'^\d+px-', '', nome) # tira (se houver) o prefixo de tamanho, comum em imagens hospedadas na Wikipédia
         nomes_imagens.append(nome) # guarda apenas o nome da imagem na lista
 
-    with open("imagens.txt", "w", encoding="utf-8") as f:
+    with open("3-imagens.txt", "w", encoding="utf-8") as f:
         f.write("IMAGENS DO ARTIGO WIKI\n\n")
 
         for nome, link in zip(nomes_imagens, links_imagens):
