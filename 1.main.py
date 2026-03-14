@@ -16,3 +16,5 @@ extrair_links(html)
 
 extrair_imagens(html)
 
+print("Tudo salvo nos seus respectivos arquivos!")
+

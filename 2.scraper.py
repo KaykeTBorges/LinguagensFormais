@@ -34,18 +34,22 @@ def extrair_topicos(html):
     # O re.DOTALL é fundamental para ignorar as quebras de linha
     topicos = re.findall(padrao_topicos, html, re.DOTALL)
 
-    print("\nTÓPICOS DO ARTIGO WIKI")
-    for t in topicos:
-        print(f"- {t}")
+    with open("topicos.txt", "w", encoding="utf-8") as f:
+        f.write("TÓPICOS DO ARTIGO WIKI\n\n")
+
+        for t in topicos:
+            linha = f"- {t}\n"
+            f.write(linha)
 
 # Captura de LINKS
 def extrair_links(html):
     # os links se encontram em href
     # href="/wiki/[^":?#]+" -> Garante que o link é para um artigo (sem imagens ou seções)
+    # (/wiki/[^":?#]+) -> Grupo de captura que pega o caminho do link do artigo
     # .*? -> Pula qualquer atributo extra no meio
     # title="([^"]+)" -> Grupo de captura: pega o nome limpo/acentuado da página
 
-    padrao_links = r'href="/wiki/[^":?#]+".*?title="([^"]+)"'
+    padrao_links = r'href="(/wiki/[^":?#]+)".*?title="([^"]+)"'
     links = re.findall(padrao_links, html)
 
     # Tudo o que for interface ou página de sistema entra aqui
@@ -56,16 +60,23 @@ def extrair_links(html):
     
     # limpeza filtra mantendo apenas o que não contém os termos da lista negra
     links_limpo = []
-    for l in links:
+    for link, titulo in links:
         # Se nenhuma palavra da lista negra estiver no título, adiciona
-        if not any(termo in l for termo in lista_negra):
-            links_limpo.append(l)
+        if not any(termo in titulo for termo in lista_negra):
+
+            # transforma o link relativo em link completo da Wikipédia
+            link_completo = "https://pt.wikipedia.org" + link
+
+            links_limpo.append((titulo, link_completo))
 
     links = sorted(set(links_limpo))
 
-    print("\nLINKS DO ARTIGO WIKI")
-    for l in links_limpo:
-        print(f"- {l}")
+    with open("links.txt", "w", encoding="utf-8") as f:
+        f.write("LINKS DO ARTIGO WIKI\n\n")
+
+        for titulo, link in links:
+            linha = f"TÍTULO: {titulo}\nLINK: {link}\n\n"
+            f.write(linha)
 
 # CAPTURA DE NOMES DE IMAGENS
 def extrair_imagens(html):
@@ -88,6 +99,10 @@ def extrair_imagens(html):
         nome = re.sub(r'^\d+px-', '', nome) # tira (se houver) o prefixo de tamanho, comum em imagens hospedadas na Wikipédia
         nomes_imagens.append(nome) # guarda apenas o nome da imagem na lista
 
-    print("IMAGENS DO ARTIGO WIKI")
-    for img in nomes_imagens:
-        print(f"NOME DA IMAGEM:- {img}\nLINK: {links_imagens[nomes_imagens.index(img)]}")
+    with open("imagens.txt", "w", encoding="utf-8") as f:
+        f.write("IMAGENS DO ARTIGO WIKI\n\n")
+
+        for nome, link in zip(nomes_imagens, links_imagens):
+
+            linha = f"NOME DA IMAGEM: {nome}\nLINK: {link}\n\n"
+            f.write(linha)
