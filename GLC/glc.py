@@ -51,3 +51,13 @@ class AnalisadorExpressão:
             return "Erro"
         
         return resultado
+    
+    def imprimir_em_arquivo(self, no, arquivo, nivel=0):
+        indentacao = "    " * nivel
+        if isinstance(no, list):
+            arquivo.write(f"{indentacao}Nó (E -> (E Op E)):\n")
+            for filho in no:
+                self.imprimir_em_arquivo(filho, arquivo, nivel + 1)
+        else:
+            # Escreve os terminais: a, +, -, *, /, (, )
+            arquivo.write(f"{indentacao}Terminal: {no}\n")
