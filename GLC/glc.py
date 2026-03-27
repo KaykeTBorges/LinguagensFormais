@@ -10,7 +10,7 @@ class AnalisadorExpressão:
             return None
         
     def consumir(self, esperado):
-        atual = self.proximo_caratere(self)
+        atual = self.proximo_caratere()
         if atual == esperado:
             self.posicao += 1
             return atual
