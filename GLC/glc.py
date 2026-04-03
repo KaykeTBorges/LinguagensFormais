@@ -3,14 +3,14 @@ class AnalisadorExpressão:
         self.entrada = texto.replace(" ", "")
         self.posicao = 0
 
-    def proximo_caratere(self):
+    def atual_caractere(self):
         if self.posicao < len(self.entrada):
             return self.entrada[self.posicao]
         else:
             return None
         
     def consumir(self, esperado):
-        atual = self.proximo_caratere()
+        atual = self.atual_caractere()
         if atual == esperado:
             self.posicao += 1
             return atual
@@ -18,14 +18,14 @@ class AnalisadorExpressão:
             return "Erro"
         
     def analisarOp(self):
-        op = self.proximo_caratere()
+        op = self.atual_caractere()
         if op in ['+', '-', '*', '/']:
             return self.consumir(op)
         else:
             return "Erro"
         
     def analisarE(self):
-        e = self.proximo_caratere()
+        e = self.atual_caractere()
         
         if e == 'a':
             return self.consumir('a')
