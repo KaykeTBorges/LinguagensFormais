@@ -1,1 +1,16 @@
-Terminal: a
+Nó (E -> (E Op E)):
+    Terminal: (
+    Nó (E -> (E Op E)):
+        Terminal: (
+        Terminal: a
+        Terminal: +
+        Terminal: a
+        Terminal: )
+    Terminal: *
+    Nó (E -> (E Op E)):
+        Terminal: (
+        Terminal: a
+        Terminal: +
+        Terminal: a
+        Terminal: )
+    Terminal: )
