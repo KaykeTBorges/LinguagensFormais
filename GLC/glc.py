@@ -61,3 +61,4 @@ class AnalisadorExpressão:
         else:
             # Escreve os terminais: a, +, -, *, /, (, )
             arquivo.write(f"{indentacao}Terminal: {no}\n")
+
